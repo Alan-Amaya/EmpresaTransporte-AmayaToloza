@@ -6,11 +6,7 @@ public class Automovil extends Vehiculo {
 		for (Integer asiento = 0; asiento < 3; asiento++) {
 			this.asientos[asiento] = Boolean.FALSE;
 		}
+		this.categoriaVehiculo = Categorias.getCategoria(2);
 	}
 
-	@Override
-	public void asignarChoferPorId_(Chofer chofer) {
-		this.cantdKmRecorridos += 1;
-		this.choferId = chofer.getId();
-	}
 }

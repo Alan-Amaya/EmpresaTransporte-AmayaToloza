@@ -5,7 +5,8 @@ abstract class Vehiculo {
 	protected Integer cantdKmRecorridos = 0;
 	protected Integer choferId;
 	protected Boolean[] asientos;
-
+	protected String categoriaVehiculo;
+	
 	public Boolean[] getAsientos() {
 		return this.asientos;
 	}
@@ -19,34 +20,37 @@ abstract class Vehiculo {
 	}
 
 	public void asignarChoferPorId_(Chofer chofer) {
-		if (this.noHayPasajeros()) {
+		if (this.noHayPasajeros() && this.choferId == null && chofer.getNombreCategoria()==this.categoriaVehiculo) {
+			this.choferId = chofer.getId();
+		}
+	}
+	
+	public void asignarNuevoChoferPorId_(Chofer chofer) {
+		if (this.noHayPasajeros() && chofer.getNombreCategoria()==this.categoriaVehiculo) {
 			this.choferId = chofer.getId();
 		}
 	}
 
-	private Boolean noHayPasajeros() {
-		Integer asientosVacios = 0;
-		Boolean todosAsientosVacios = Boolean.FALSE;
-		for (Integer asiento = 0; asiento < this.asientos.length; asiento++) {
-			if (this.asientos[asiento] == Boolean.FALSE) {
-				asientosVacios++;
-			}
-		}
-		if (asientosVacios == this.asientos.length) {
-			todosAsientosVacios = Boolean.TRUE;
-		}
-		return todosAsientosVacios;
+	public Boolean noHayPasajeros() {
+		return this.ultimoAsientoNoOcupado() == 0;
 	}
-
-	public Boolean sumarPasajero() {
+	
+	protected Integer ultimoAsientoNoOcupado() {
 		Integer asientoNro = 0;
-		Boolean pasajeroAgregado = Boolean.FALSE;
-		while (asientos[asientoNro] == Boolean.TRUE) {
+		while (this.asientos[asientoNro] == Boolean.TRUE) {
 			asientoNro++;
 		}
-		if (asientoNro <= this.asientos.length && asientos[asientoNro] == Boolean.FALSE) {
-			asientos[asientoNro] = Boolean.TRUE;
-			pasajeroAgregado = Boolean.TRUE;
+		return asientoNro;
+	}
+	
+	public Boolean sumarPasajero() {
+		Boolean pasajeroAgregado = Boolean.FALSE;
+		if (this.choferId!=null) {
+			if (this.ultimoAsientoNoOcupado() <= this.asientos.length && 
+					!this.asientos[this.ultimoAsientoNoOcupado()]) {
+				this.asientos[this.ultimoAsientoNoOcupado()] = Boolean.TRUE;
+				pasajeroAgregado = Boolean.TRUE;
+			}
 		}
 		return pasajeroAgregado;
 	}

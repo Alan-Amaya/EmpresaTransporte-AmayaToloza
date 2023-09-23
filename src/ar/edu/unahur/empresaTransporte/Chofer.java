@@ -3,8 +3,13 @@ package ar.edu.unahur.empresaTransporte;
 public class Chofer {
 	private Integer id;
 	private String nombre;
-	private String nombreCategoria; /* la categoría está relacionada al vehículo que conduce, así que hay 3 */
-
+	private Integer nroCategoria; /* la categoría está relacionada al vehículo que conduce, así que hay 3 */
+	
+	public Chofer(Integer id, String nombre) {
+		this.id = id;
+		this.nombre = nombre;
+	}
+	
 	public Integer getId() {
 		return this.id;
 	}
@@ -13,26 +18,16 @@ public class Chofer {
 		return this.nombre;
 	}
 
-	public String getNombreCategoriaPorNroCat_(Integer nroCat) {
-		this.nombreCategoria = Categorias.getCategoria(nroCat);
-		return nombreCategoria;
+	public String getNombreCategoria() {
+		return Categorias.getCategoria(this.nroCategoria);
 	}
 
-	public void asignarId(Integer id) {
-		this.id = id;
-	}
-
-	public void asignarNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Boolean asignarCategoria(Integer nroCategoria) {
-		Boolean salida = Boolean.TRUE;
+	public Boolean asignarNroCategoria(Integer nroCategoria) {
+		Boolean asignadoCorrectamente = Boolean.FALSE;
 		if (1 <= nroCategoria && nroCategoria <= 3) {
-			this.nombreCategoria = Categorias.getCategoria(nroCategoria);
-		} else {
-			salida = Boolean.FALSE;
+			this.nroCategoria = nroCategoria;
+			asignadoCorrectamente = Boolean.TRUE; 
 		}
-		return salida;
+		return asignadoCorrectamente;
 	}
 }
