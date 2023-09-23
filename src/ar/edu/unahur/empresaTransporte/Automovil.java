@@ -4,7 +4,7 @@ public class Automovil extends Vehiculo {
 
 	public Automovil() {
 		for (Integer asiento = 0; asiento < 3; asiento++) {
-			this.asientos[asiento] = Boolean.FALSE;
+			this.asientos[asiento] = "vacio";
 		}
 		this.categoriaVehiculo = Categorias.getCategoria(2);
 	}

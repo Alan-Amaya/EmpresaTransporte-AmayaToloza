@@ -4,7 +4,7 @@ abstract class Vehiculo {
 
 	protected Integer cantdKmRecorridos = 0;
 	protected Integer choferId;
-	protected Boolean[] asientos;
+	protected Boolean[] asientos = {Boolean.FALSE};
 	protected String categoriaVehiculo;
 	
 	public Boolean[] getAsientos() {
