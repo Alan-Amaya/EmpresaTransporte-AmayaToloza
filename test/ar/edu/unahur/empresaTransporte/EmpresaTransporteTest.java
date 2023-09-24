@@ -9,17 +9,14 @@ public class EmpresaTransporteTest {
 		Categorias listaCategorias = new Categorias();
 		return listaCategorias;
 	}
-
+	
+//ChoferTest
 	@Test
 	public void crearChoferYCorroborarCategoria() {
 		crearCategorias();
-		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez");
-		marioGonzalez.asignarNroCategoria(1);
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 1);
 		String valorEsperado = "Moto";
 		String valorObtenido = null;
-		marioGonzalez.getNombreCategoria();
-		marioGonzalez.getNombre();
-		marioGonzalez.getId();;
 		//Ejecucion
 		valorObtenido = marioGonzalez.getNombreCategoria();
 		//Contrastacion o Validacion
@@ -27,25 +24,50 @@ public class EmpresaTransporteTest {
 	}
 	
 	@Test
-	public void crearChoferConCategoriaErronea() {
+	public void crearChoferYCorroborarSuId() {
 		crearCategorias();
-		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez");
-		Boolean valorEsperado = Boolean.FALSE;
-		Boolean valorObtenido = Boolean.TRUE;
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 1);
+		Integer valorEsperado = 11;
+		Integer valorObtenido = null;
 		//Ejecucion
-		valorObtenido = marioGonzalez.asignarNroCategoria(4);
+		valorObtenido = marioGonzalez.getId();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
 	
 	@Test
+	public void crearChoferConCategoriaErronea() {
+		crearCategorias();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 4);
+		String valorEsperado = null;
+		String valorObtenido = "";
+		//Ejecucion
+		valorObtenido = marioGonzalez.getNombreCategoria();
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);		
+	}
+
+//AutobusTest
+	@Test
+	public void crearAutobusYCorroborarSuCategoria() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		String valorEsperado = "Autobus";
+		String valorObtenido = null;
+		//Ejecucion
+		valorObtenido = tum.getCategoria();
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
 	public void crearAutobusAsignarChoferYCorroborarSuId() {
 		//Preparacion
-		Autobus tum = new Autobus();
 		crearCategorias();
-		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez");
-		marioGonzalez.asignarNroCategoria(3);
-		tum.asignarChoferPorId_(marioGonzalez);
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		tum.asignarChofer(marioGonzalez);
 		Integer valorEsperado = marioGonzalez.getId();
 		Integer valorObtenido = null;
 		//Ejecucion
@@ -53,4 +75,164 @@ public class EmpresaTransporteTest {
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
+	
+	@Test
+	public void subirPasajeroConChofer() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		tum.asignarChofer(marioGonzalez);
+		Boolean valorEsperado = Boolean.TRUE;
+		Boolean valorObtenido = Boolean.FALSE;
+		//Ejecucion
+		valorObtenido = tum.sumarPasajero();
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void subirPasajeroSinChofer() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Boolean valorEsperado = Boolean.FALSE;
+		Boolean valorObtenido = Boolean.TRUE;
+		//Ejecucion
+		valorObtenido = tum.sumarPasajero();
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	/*Este test pareciera que anda bien, pero no. Dejé puesto esos prints para que se vea que NO está
+	 *guardando true en la ultima posicion. Es solamente por un problema del recorrido de la lista.
+	 */
+	public void subirPasajeroConAutobusLleno() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		tum.asignarChofer(marioGonzalez);
+		System.out.println("largo de la lista -1: " + (tum.getAsientos().length-1));
+		for (Integer asiento = 0; asiento < 20; asiento++) {
+			tum.sumarPasajero();
+		}
+		Boolean valorEsperado = Boolean.FALSE;
+		Boolean valorObtenido = Boolean.TRUE;
+		//Ejecucion
+		valorObtenido = tum.sumarPasajero();
+		//Contrastacion o Validacion
+		System.out.println("ultimo asiento libre: " + (tum.asientoLibreNroX()));
+		for (Integer asiento = 0; asiento < 20; asiento++) {
+			System.out.println(tum.getAsientos()[asiento]);
+		}
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void intentarCambiarChoferConPasajeroArriba() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		Chofer jorgeAlvarez = new Chofer(12, "Jorge Alvarez", 3);
+		tum.asignarChofer(marioGonzalez);
+		tum.sumarPasajero();
+		Boolean valorEsperado = Boolean.FALSE;
+		Boolean valorObtenido = Boolean.TRUE;
+		//Ejecucion
+		valorObtenido = tum.asignarNuevoChofer(jorgeAlvarez);
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void cambiarChoferSinPasajeroArriba() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		Chofer jorgeAlvarez = new Chofer(12, "Jorge Alvarez", 3);
+		tum.asignarChofer(marioGonzalez);
+		Boolean valorEsperado = Boolean.TRUE;
+		Boolean valorObtenido = Boolean.FALSE;
+		//Ejecucion
+		valorObtenido = tum.asignarNuevoChofer(jorgeAlvarez);
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void corroborarQueNoEstaVacio() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		tum.asignarChofer(marioGonzalez);
+		tum.sumarPasajero();
+		Boolean valorEsperado = Boolean.FALSE;
+		Boolean valorObtenido = Boolean.TRUE;
+		//Ejecucion
+		valorObtenido = tum.noHayPasajeros();
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void corroborarQueHayaTresAsientosOcupados() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		tum.asignarChofer(marioGonzalez);
+		for (Integer asiento = 0; asiento < 3; asiento++) {
+			tum.sumarPasajero();
+		}
+		Integer valorEsperado = 3;
+		Integer valorObtenido = 0;
+		//Ejecucion
+		valorObtenido = tum.asientoLibreNroX();
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void vaciarAsientosYCorroborarQueEsteVacio() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		tum.asignarChofer(marioGonzalez);
+		for (Integer asiento = 0; asiento < 3; asiento++) {
+			tum.sumarPasajero();
+		}
+		tum.vaciarAsientos();
+		Boolean valorEsperado = Boolean.TRUE;
+		Boolean valorObtenido = Boolean.FALSE;
+		//Ejecucion
+		valorObtenido = tum.noHayPasajeros();
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void recorrerCuatroKm() {
+		//Preparacion
+		crearCategorias();
+		Autobus tum = new Autobus();
+		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
+		tum.asignarChofer(marioGonzalez);
+		for (Integer asiento = 0; asiento < 3; asiento++) {
+			tum.sumarPasajero();
+		}
+		tum.recorrer_Km(4);
+		Integer valorEsperado = tum.getCantdKmRecorridos();
+		Integer valorObtenido = null;
+		//Ejecucion
+		valorObtenido = 4;
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
 }

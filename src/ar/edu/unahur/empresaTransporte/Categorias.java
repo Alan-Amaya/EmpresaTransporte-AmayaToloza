@@ -7,8 +7,8 @@ public class Categorias {
 
 	public Categorias() {
 		categorias.put(1, "Moto");
-		categorias.put(2, "Automóvil");
-		categorias.put(3, "Autobús");
+		categorias.put(2, "Automovil");
+		categorias.put(3, "Autobus");
 	}
 
 	public static String getCategoria(Integer cat) {

@@ -3,11 +3,12 @@ package ar.edu.unahur.empresaTransporte;
 public class Chofer {
 	private Integer id;
 	private String nombre;
-	private Integer nroCategoria; /* la categoría está relacionada al vehículo que conduce, así que hay 3 */
+	private Integer nroCategoria;
 	
-	public Chofer(Integer id, String nombre) {
+	public Chofer(Integer id, String nombre, Integer categoria) {
 		this.id = id;
 		this.nombre = nombre;
+		this.asignarNroCategoria(categoria);
 	}
 	
 	public Integer getId() {
@@ -22,12 +23,9 @@ public class Chofer {
 		return Categorias.getCategoria(this.nroCategoria);
 	}
 
-	public Boolean asignarNroCategoria(Integer nroCategoria) {
-		Boolean asignadoCorrectamente = Boolean.FALSE;
+	private void asignarNroCategoria(Integer nroCategoria) {
 		if (1 <= nroCategoria && nroCategoria <= 3) {
 			this.nroCategoria = nroCategoria;
-			asignadoCorrectamente = Boolean.TRUE; 
 		}
-		return asignadoCorrectamente;
 	}
 }
