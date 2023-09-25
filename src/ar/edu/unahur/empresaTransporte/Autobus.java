@@ -1,11 +1,12 @@
 package ar.edu.unahur.empresaTransporte;
 
 public class Autobus extends Vehiculo {
+	private Integer capacidaMaximaDePasajeros = 20;
 	
 	public Autobus() {
-		for (Integer asiento = 0; asiento < 20; asiento++) {
-			this.asientos[asiento] = Boolean.FALSE;
-		}
-		this.categoriaVehiculo = Categorias.getCategoria(3);
+		//relleno todos los asientos con "Libre"
+		for(int cantAsientos = 0; cantAsientos<capacidaMaximaDePasajeros; cantAsientos++) 
+		{ asientos.add(cantAsientos, "Libre");}
 	}
+	public Autobus(Chofer unChofer) {this.chofer = unChofer;}
 }

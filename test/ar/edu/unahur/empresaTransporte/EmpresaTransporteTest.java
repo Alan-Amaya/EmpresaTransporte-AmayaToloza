@@ -16,10 +16,7 @@ public class EmpresaTransporteTest {
 		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez");
 		marioGonzalez.asignarNroCategoria(1);
 		String valorEsperado = "Moto";
-		String valorObtenido = null;
-		marioGonzalez.getNombreCategoria();
-		marioGonzalez.getNombre();
-		marioGonzalez.getId();;
+		String valorObtenido;
 		//Ejecucion
 		valorObtenido = marioGonzalez.getNombreCategoria();
 		//Contrastacion o Validacion
@@ -30,10 +27,11 @@ public class EmpresaTransporteTest {
 	public void crearChoferConCategoriaErronea() {
 		crearCategorias();
 		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez");
-		Boolean valorEsperado = Boolean.FALSE;
-		Boolean valorObtenido = Boolean.TRUE;
+		marioGonzalez.asignarNroCategoria(4);
+		Integer valorEsperado = null;
+		String valorObtenido;
 		//Ejecucion
-		valorObtenido = marioGonzalez.asignarNroCategoria(4);
+		valorObtenido = marioGonzalez.getNombreCategoria();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
@@ -41,16 +39,26 @@ public class EmpresaTransporteTest {
 	@Test
 	public void crearAutobusAsignarChoferYCorroborarSuId() {
 		//Preparacion
-		Autobus tum = new Autobus();
 		crearCategorias();
-		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez");
-		marioGonzalez.asignarNroCategoria(3);
-		tum.asignarChoferPorId_(marioGonzalez);
-		Integer valorEsperado = marioGonzalez.getId();
-		Integer valorObtenido = null;
+		Chofer mario = new Chofer(11, "Mario Gonzalez");
+		mario.asignarNroCategoria(3);
+		Autobus miBondi = new Autobus(mario);
+		miBondi.asignarChoferConId_(mario);
+		Integer valorEsperado = 11;
+		Integer valorObtenido;
 		//Ejecucion
-		valorObtenido = tum.getChoferId();
+		valorObtenido = miBondi.chofer.getId();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void zonaPruebas() {
+		Autobus tum = new Autobus();
+		crearCategorias();
+		for (int i = 0; i<20; i++) {tum.asientos.set(i, "Ocupado");}
+		System.out.println(tum.asientos);
+		tum.sumarPasajero();
+		System.out.println(tum.asientos);	   
 	}
 }

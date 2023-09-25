@@ -1,12 +1,12 @@
 package ar.edu.unahur.empresaTransporte;
 
 public class Automovil extends Vehiculo {
-
+private Integer capacidaMaximaDePasajeros = 3;
+	
 	public Automovil() {
-		for (Integer asiento = 0; asiento < 3; asiento++) {
-			this.asientos[asiento] = "vacio";
-		}
-		this.categoriaVehiculo = Categorias.getCategoria(2);
+		//relleno todos los asientos con "Libre"
+		for(int cantAsientos = 0; cantAsientos<capacidaMaximaDePasajeros; cantAsientos++) 
+		{ asientos.add(cantAsientos, "Libre");}
 	}
-
 }
+

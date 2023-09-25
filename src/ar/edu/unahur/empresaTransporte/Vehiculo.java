@@ -1,67 +1,60 @@
 package ar.edu.unahur.empresaTransporte;
 
+import java.util.*;
+
 abstract class Vehiculo {
 
 	protected Integer cantdKmRecorridos = 0;
-	protected Integer choferId;
-	protected Boolean[] asientos = {Boolean.FALSE};
+	protected List<String> asientos = new ArrayList<>();
 	protected String categoriaVehiculo;
+	protected Chofer chofer;
 	
-	public Boolean[] getAsientos() {
-		return this.asientos;
-	}
+	public List<String> getAsientos() {return this.asientos;}
+	public Integer getCantdKmRecorridos() {return this.cantdKmRecorridos;}
+	public String getCategoría() {return this.categoriaVehiculo;}
 
-	public Integer getChoferId() {
-		return this.choferId;
-	}
-
-	public Integer getCantdKmRecorridos() {
-		return this.cantdKmRecorridos;
-	}
-
-	public void asignarChoferPorId_(Chofer chofer) {
-		if (this.noHayPasajeros() && this.choferId == null && chofer.getNombreCategoria()==this.categoriaVehiculo) {
-			this.choferId = chofer.getId();
-		}
+	public void asignarChoferConId_(Chofer chofer) {
+		if (this.vehiculoVacio() && this.choferConCateriaCorrespondiente(chofer))
+		{this.chofer = chofer;}
 	}
 	
 	public void asignarNuevoChoferPorId_(Chofer chofer) {
-		if (this.noHayPasajeros() && chofer.getNombreCategoria()==this.categoriaVehiculo) {
-			this.choferId = chofer.getId();
-		}
+		if (this.vehiculoVacio() && this.choferConCateriaCorrespondiente(chofer))
+		{this.chofer = chofer;}
 	}
 
-	public Boolean noHayPasajeros() {
-		return this.ultimoAsientoNoOcupado() == 0;
-	}
+	public boolean choferConCateriaCorrespondiente(Chofer chofer)
+	{return chofer.getNombreCategoria()==this.categoriaVehiculo;}
 	
-	protected Integer ultimoAsientoNoOcupado() {
-		Integer asientoNro = 0;
-		while (this.asientos[asientoNro] == Boolean.TRUE) {
-			asientoNro++;
-		}
-		return asientoNro;
-	}
-	
-	public Boolean sumarPasajero() {
-		Boolean pasajeroAgregado = Boolean.FALSE;
-		if (this.choferId!=null) {
-			if (this.ultimoAsientoNoOcupado() <= this.asientos.length && 
-					!this.asientos[this.ultimoAsientoNoOcupado()]) {
-				this.asientos[this.ultimoAsientoNoOcupado()] = Boolean.TRUE;
-				pasajeroAgregado = Boolean.TRUE;
-			}
-		}
-		return pasajeroAgregado;
+	public void sumarPasajero() {
+		if(!this.vehiculoLleno()) 
+		{asientos.set(this.primerAsientoLibre(),"Ocupado");}
+		else if (this.vehiculoLleno()) {System.out.println("El vehículo se encuentra lleno");}
 	}
 
-	public void vaciarsientos() {
-		for (Integer asiento = 0; asiento < this.asientos.length; asiento++) {
-			this.asientos[asiento] = Boolean.FALSE;
-		}
+	public void recorrer_Km(Integer kmARecorrer) {this.cantdKmRecorridos += kmARecorrer;}
+	
+	public void vaciarAsientos() {
+		Integer asiento = 0;
+		while (!this.vehiculoVacio()){
+			asientos.set(asiento, "Libre"); asiento++;}
 	}
 	
-	public void recorrer_Km(Integer kmARecorrer) {
-		this.cantdKmRecorridos += kmARecorrer;
+	
+	public Integer primerAsientoLibre() {
+	Integer nroAsientoLibre = 0;
+	Integer asientoActual = 0;
+	
+		while (this.asientos.get(asientoActual) != "Libre") {
+			if (this.asientos.get(asientoActual) == "Libre") 
+				{nroAsientoLibre = asientoActual;}
+			asientoActual++;
+		}
+		if (this.asientos.get(asientoActual) == "Libre") 
+		{nroAsientoLibre = asientoActual;}
+	return nroAsientoLibre;
 	}
+	
+	public Boolean vehiculoVacio() {return !asientos.contains("Ocupado");}
+	public Boolean vehiculoLleno() {return !asientos.contains("Libre");}
 }
