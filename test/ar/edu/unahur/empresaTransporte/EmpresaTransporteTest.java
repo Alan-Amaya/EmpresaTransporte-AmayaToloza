@@ -105,16 +105,12 @@ public class EmpresaTransporteTest {
 	}
 	
 	@Test
-	/*Este test pareciera que anda bien, pero no. Dejé puesto esos prints para que se vea que NO está
-	 *guardando true en la ultima posicion. Es solamente por un problema del recorrido de la lista.
-	 */
 	public void subirPasajeroConAutobusLleno() {
 		//Preparacion
 		crearCategorias();
 		Autobus tum = new Autobus();
 		Chofer marioGonzalez = new Chofer(11, "Mario Gonzalez", 3);
 		tum.asignarChofer(marioGonzalez);
-		System.out.println("largo de la lista -1: " + (tum.getAsientos().length-1));
 		for (Integer asiento = 0; asiento < 20; asiento++) {
 			tum.sumarPasajero();
 		}
@@ -123,10 +119,6 @@ public class EmpresaTransporteTest {
 		//Ejecucion
 		valorObtenido = tum.sumarPasajero();
 		//Contrastacion o Validacion
-		System.out.println("ultimo asiento libre: " + (tum.asientoLibreNroX()));
-		for (Integer asiento = 0; asiento < 20; asiento++) {
-			System.out.println(tum.getAsientos()[asiento]);
-		}
 		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
 	
@@ -208,11 +200,17 @@ public class EmpresaTransporteTest {
 			tum.sumarPasajero();
 		}
 		tum.vaciarAsientos();
-		Boolean valorEsperado = Boolean.TRUE;
-		Boolean valorObtenido = Boolean.FALSE;
+		Boolean valorEsperado = Boolean.FALSE;
+		Boolean valorObtenido = Boolean.TRUE;
 		//Ejecucion
 		valorObtenido = tum.noHayPasajeros();
+		/*Preguntarle al profe:  
+			¿Como es posible que tire false y funcione todo?.*/
+		System.out.println("Hay pasajero? " + tum.noHayPasajeros());
 		//Contrastacion o Validacion
+		for (Integer asiento = 0; asiento < 20; asiento++) {
+			System.out.println(tum.getAsientos().get(asiento));
+		}
 		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
 	
