@@ -3,7 +3,7 @@ package ar.edu.unahur.empresaTransporte;
 public class Chofer {
 	protected Integer id;
 	private String nombre;
-	private Integer nroCategoria = 0; /* la categoría está relacionada al vehículo que conduce, así que hay 3 */
+	private Integer nroCategoria; /* la categoría está relacionada al vehículo que conduce, así que hay 3 */
 	
 	public Chofer(Integer id, String nombre) {
 		this.id = id;

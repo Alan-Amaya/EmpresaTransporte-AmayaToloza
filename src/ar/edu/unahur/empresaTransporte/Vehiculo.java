@@ -26,11 +26,11 @@ abstract class Vehiculo {
 	public boolean choferConCateriaCorrespondiente(Chofer chofer)
 	{return chofer.getNombreCategoria()==this.categoriaVehiculo;}
 	
-	public void sumarPasajero() {
+	public Boolean sumarPasajero() {
 		if(!this.vehiculoLleno()) 
-		{asientos.set(this.primerAsientoLibre(),"Ocupado");}
-		else if (this.vehiculoLleno()) {System.out.println("El vehículo se encuentra lleno");}
-	}
+		{asientos.set(this.primerAsientoLibre(),"Ocupado"); return Boolean.TRUE;}
+		else return Boolean.FALSE;}
+	
 
 	public void recorrer_Km(Integer kmARecorrer) {this.cantdKmRecorridos += kmARecorrer;}
 	
