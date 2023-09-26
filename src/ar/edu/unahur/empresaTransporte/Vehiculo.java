@@ -1,15 +1,19 @@
 package ar.edu.unahur.empresaTransporte;
 
+import java.util.ArrayList;
+
 abstract class Vehiculo {
 
 	protected Integer cantdKmRecorridos = 0;
 	protected Integer choferId;
-	protected Boolean[] asientos;
+	protected ArrayList<Boolean> asientos = new ArrayList<Boolean>();
 	protected String categoriaVehiculo;
+	protected static Integer nroAsientos;
 	
 	public String getCategoria() {
 		return this.categoriaVehiculo;
 	}
+	
 	public Integer getChoferId() {
 		return this.choferId;
 	}
@@ -18,20 +22,21 @@ abstract class Vehiculo {
 		return this.cantdKmRecorridos;
 	}
 	
-	public Boolean[] getAsientos() {
+	//Deberia ser borrado
+	public ArrayList<Boolean> getAsientos() {
 		return this.asientos;
 	}
 	
 	public Integer asientoLibreNroX() {
-		Integer asientoNro = 0;
-		while (this.asientos[asientoNro]) {
-			asientoNro++;
-		}
-		return asientoNro;
+		return this.asientos.indexOf(Boolean.FALSE);
 	}
 	
 	public Boolean noHayPasajeros() {
-		return this.asientoLibreNroX() == 0;
+		return !this.asientos.contains(Boolean.TRUE);
+	}
+	
+	protected Boolean hayAsientoLibreYHayChofer() { 
+		return this.hayAsientoLibre() && this.choferId!=null;
 	}
 	
 	protected Boolean noHayPasajeroNiChoferYCoincideCategoria(Chofer chofer) {
@@ -47,7 +52,7 @@ abstract class Vehiculo {
 		}
 		return asignadoCorrectamente;
 	}
-	
+
 	public Boolean asignarNuevoChofer(Chofer chofer) {
 		Boolean asignadoCorrectamente = Boolean.FALSE;
 		if (this.noHayPasajeros() && chofer.getNombreCategoria()==this.categoriaVehiculo) {
@@ -57,24 +62,13 @@ abstract class Vehiculo {
 		return asignadoCorrectamente;
 	}
 	
-	protected Boolean hayAsientoLibre() {
-		return this.asientoLibreNroX() != this.asientos.length-1;
+	public Boolean hayAsientoLibre() {
+		return this.asientoLibreNroX() <= Vehiculo.nroAsientos;
 	}
-	
-	public Boolean sumarPasajero() {
-		Boolean pasajeroAgregado = Boolean.FALSE;
-		if (this.choferId!=null) {
-			if (this.hayAsientoLibre()) {
-				this.asientos[this.asientoLibreNroX()] = Boolean.TRUE;
-				pasajeroAgregado = Boolean.TRUE;
-			}
-		}
-		return pasajeroAgregado;
-	}
-	
+
 	public void vaciarAsientos() {
-		for (Integer asiento = 0; asiento < this.asientos.length; asiento++) {
-			this.asientos[asiento] = Boolean.FALSE;
+		for (Integer asiento = 0; asiento <= Vehiculo.nroAsientos; asiento++) {
+			this.asientos.add(asiento, Boolean.FALSE);
 		}
 	}
 	
