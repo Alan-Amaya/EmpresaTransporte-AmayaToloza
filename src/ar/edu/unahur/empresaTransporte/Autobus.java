@@ -12,7 +12,7 @@ public class Autobus extends Vehiculo {
 	
 	public Boolean sumarPasajero() {
 	Boolean pasajeroAgregado = Boolean.FALSE;
-	if (this.hayAsientoLibre() && this.choferId!=null) {
+	if (this.hayAsientoLibreYHayChofer()) {
 		this.asientos.add(this.asientoLibreNroX(), Boolean.TRUE);
 		pasajeroAgregado = Boolean.TRUE;
 		}

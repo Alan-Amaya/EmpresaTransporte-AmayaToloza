@@ -35,6 +35,10 @@ abstract class Vehiculo {
 		return !this.asientos.contains(Boolean.TRUE);
 	}
 	
+	protected Boolean hayAsientoLibreYHayChofer() { 
+		return this.hayAsientoLibre() && this.choferId!=null;
+	}
+	
 	protected Boolean noHayPasajeroNiChoferYCoincideCategoria(Chofer chofer) {
 		return this.noHayPasajeros() && this.choferId == null 
 				&& chofer.getNombreCategoria()==this.categoriaVehiculo;

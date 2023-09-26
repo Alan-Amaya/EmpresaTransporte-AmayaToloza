@@ -10,7 +10,7 @@ public class Moto extends Vehiculo {
 	
 	public Boolean sumarPasajero() {
 	Boolean pasajeroAgregado = Boolean.FALSE;
-	if (this.hayAsientoLibre() && this.choferId!=null) {
+	if (this.hayAsientoLibreYHayChofer()) {
 		this.asientos.add(0, Boolean.TRUE);
 		pasajeroAgregado = Boolean.TRUE;
 		}

@@ -12,8 +12,8 @@ public class Automovil extends Vehiculo {
 
 	public Boolean sumarPasajero(Integer nroPasajeros) {
 		Boolean pasajeroAgregado = Boolean.FALSE;
-		if (nroPasajeros-1 <= Vehiculo.nroAsientos) {
-			for (Integer asiento = 0; asiento < 3; asiento++) {
+		if (nroPasajeros-1 <= Vehiculo.nroAsientos && this.hayAsientoLibreYHayChofer()) {
+			for (Integer asiento = 0; asiento < nroPasajeros; asiento++) {
 				this.asientos.add(Boolean.TRUE);
 			}
 			pasajeroAgregado = Boolean.TRUE;

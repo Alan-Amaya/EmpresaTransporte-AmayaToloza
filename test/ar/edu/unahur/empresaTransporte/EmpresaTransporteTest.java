@@ -208,9 +208,6 @@ public class EmpresaTransporteTest {
 			¿Como es posible que tire false y funcione todo?.*/
 		System.out.println("Hay pasajero? " + tum.noHayPasajeros());
 		//Contrastacion o Validacion
-		for (Integer asiento = 0; asiento < 20; asiento++) {
-			System.out.println(tum.getAsientos().get(asiento));
-		}
 		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
 	
