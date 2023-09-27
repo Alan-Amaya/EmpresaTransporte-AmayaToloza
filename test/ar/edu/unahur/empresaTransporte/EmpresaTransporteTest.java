@@ -204,9 +204,6 @@ public class EmpresaTransporteTest {
 		Boolean valorObtenido = Boolean.TRUE;
 		//Ejecucion
 		valorObtenido = tum.noHayPasajeros();
-		/*Preguntarle al profe:  
-			¿Como es posible que tire false y funcione todo?.*/
-		System.out.println("Hay pasajero? " + tum.noHayPasajeros());
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
@@ -231,8 +228,7 @@ public class EmpresaTransporteTest {
 	}
 	
 	
-	//AUTO
-	
+	//AutomovilTest
 	@Test
 	public void crearUnAutoAsignarChoferYCorroborarSuId() {
 		//Preparacion
@@ -263,9 +259,6 @@ public class EmpresaTransporteTest {
 		Boolean valorObtenido = Boolean.TRUE;
 		//Ejecucion
 		valorObtenido = tum.noHayPasajeros();
-		/*Preguntarle al profe:  
-			¿Como es posible que tire false y funcione todo?.*/
-		System.out.println("Hay pasajero? " + tum.noHayPasajeros());
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
@@ -300,8 +293,7 @@ public class EmpresaTransporteTest {
 		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
 	
-	// MOTO
-	
+	//MotoTest
 	@Test
 	public void crearUnaMotoYCorroborarSuCategoria() {
 		//Preparacion
