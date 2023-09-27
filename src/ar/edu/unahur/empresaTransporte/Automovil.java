@@ -20,4 +20,5 @@ public class Automovil extends Vehiculo {
 		}
 		return pasajeroAgregado;
 	}
+	
 }
